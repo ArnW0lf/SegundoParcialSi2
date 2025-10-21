@@ -1,10 +1,12 @@
 from rest_framework import serializers
-from api.models import Producto, Categoria, Cliente, Venta, DetalleVenta
+from .models import Producto, Categoria, Cliente, Venta, DetalleVenta
+
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categoria
         fields = '__all__'
+
 
 class ProductoSerializer(serializers.ModelSerializer):
     # Para la lectura, mostramos el nombre de la categoría, no solo su ID.
@@ -12,7 +14,9 @@ class ProductoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Producto
-        fields = ['id', 'nombre', 'descripcion', 'precio', 'stock', 'categoria']
+        fields = ['id', 'nombre', 'descripcion',
+                  'precio', 'stock', 'categoria']
+
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,6 +24,7 @@ class ClienteSerializer(serializers.ModelSerializer):
         fields = ['id', 'nombre', 'email', 'fecha_registro']
 
 # --- Serializers para el complejo Endpoint de Ventas ---
+
 
 class DetalleVentaInputSerializer(serializers.Serializer):
     """Serializer para validar cada item del carrito."""
@@ -29,8 +34,10 @@ class DetalleVentaInputSerializer(serializers.Serializer):
     def validate_producto_id(self, value):
         """Verifica que el producto exista."""
         if not Producto.objects.filter(id=value).exists():
-            raise serializers.ValidationError("El producto con este ID no existe.")
+            raise serializers.ValidationError(
+                "El producto con este ID no existe.")
         return value
+
 
 class VentaInputSerializer(serializers.Serializer):
     """Serializer para validar los datos de entrada para crear una venta."""
@@ -41,14 +48,17 @@ class VentaInputSerializer(serializers.Serializer):
     def validate_cliente_id(self, value):
         """Verifica que el cliente exista."""
         if not Cliente.objects.filter(id=value).exists():
-            raise serializers.ValidationError("El cliente con este ID no existe.")
+            raise serializers.ValidationError(
+                "El cliente con este ID no existe.")
         return value
-    
+
     def validate_detalles(self, value):
         """Verifica que la lista de detalles no esté vacía."""
         if not value:
-            raise serializers.ValidationError("La venta debe tener al menos un producto.")
+            raise serializers.ValidationError(
+                "La venta debe tener al menos un producto.")
         return value
+
 
 class DetalleVentaOutputSerializer(serializers.ModelSerializer):
     """Serializer para mostrar los detalles de una venta ya creada."""
@@ -58,6 +68,7 @@ class DetalleVentaOutputSerializer(serializers.ModelSerializer):
         model = DetalleVenta
         fields = ['producto', 'cantidad', 'precio_unitario', 'subtotal']
 
+
 class VentaOutputSerializer(serializers.ModelSerializer):
     """Serializer para mostrar la información completa de una venta."""
     cliente = ClienteSerializer()
@@ -65,4 +76,5 @@ class VentaOutputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Venta
-        fields = ['id', 'cliente', 'fecha_venta', 'monto_total', 'estado', 'metodo_pago', 'detalles']
+        fields = ['id', 'cliente', 'fecha_venta',
+                  'monto_total', 'estado', 'metodo_pago', 'detalles']

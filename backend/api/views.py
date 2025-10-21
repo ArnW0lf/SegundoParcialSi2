@@ -2,19 +2,22 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
-from api.models import Producto, Categoria, Cliente, Venta, DetalleVenta
+from .models import Producto, Categoria, Cliente, Venta, DetalleVenta
 from .serializers import (
     ProductoSerializer, CategoriaSerializer, ClienteSerializer,
     VentaInputSerializer, VentaOutputSerializer
 )
 
 # Usamos ModelViewSet para obtener un CRUD completo con poco código.
+
+
 class CategoriaViewSet(viewsets.ModelViewSet):
     """
     API endpoint para gestionar Categorías.
     """
     queryset = Categoria.objects.all()
     serializer_class = CategoriaSerializer
+
 
 class ProductoViewSet(viewsets.ModelViewSet):
     """
@@ -23,6 +26,7 @@ class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all().select_related('categoria')
     serializer_class = ProductoSerializer
 
+
 class ClienteViewSet(viewsets.ModelViewSet):
     """
     API endpoint para gestionar Clientes.
@@ -30,19 +34,23 @@ class ClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
 
+
 class VentaViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint para listar y ver detalles de Ventas existentes.
     La creación se maneja a través de un endpoint específico.
     """
-    queryset = Venta.objects.all().prefetch_related('detalles__producto__categoria', 'cliente')
+    queryset = Venta.objects.all().prefetch_related(
+        'detalles__producto__categoria', 'cliente')
     serializer_class = VentaOutputSerializer
+
 
 class CrearVentaView(APIView):
     """
     Endpoint para la creación de una nueva venta.
     Recibe los datos del cliente, método de pago y el carrito de compras.
     """
+
     def post(self, request, *args, **kwargs):
         # 1. Validar los datos de entrada
         serializer = VentaInputSerializer(data=request.data)
@@ -64,19 +72,21 @@ class CrearVentaView(APIView):
                 nueva_venta = Venta.objects.create(
                     cliente=cliente,
                     metodo_pago=validated_data['metodo_pago'],
-                    estado='PAGADO' # Asumimos que el pago fue exitoso
+                    estado='PAGADO'  # Asumimos que el pago fue exitoso
                 )
 
                 monto_total_calculado = 0
 
                 # 4. Procesar cada item del carrito
                 for item_data in detalles_data:
-                    producto = Producto.objects.get(id=item_data['producto_id'])
+                    producto = Producto.objects.get(
+                        id=item_data['producto_id'])
                     cantidad = item_data['cantidad']
 
                     # Validar stock disponible
                     if producto.stock < cantidad:
-                        raise ValueError(f"Stock insuficiente para el producto: {producto.nombre}")
+                        raise ValueError(
+                            f"Stock insuficiente para el producto: {producto.nombre}")
 
                     # Crear el detalle de la venta
                     DetalleVenta.objects.create(
