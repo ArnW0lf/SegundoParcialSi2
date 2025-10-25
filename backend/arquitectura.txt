@@ -1,25 +1,24 @@
-smart_sales_project/      # Carpeta raíz del proyecto completo
+SegundoParcialSI2/        # Carpeta raíz del proyecto completo
 ├── .gitignore            # Archivo para ignorar archivos en Git (ej. venv, __pycache__)
 ├── manage.py             # Script de Django para administrar el proyecto
 ├── requirements.txt      # Archivo con las dependencias de Python (Django, DRF, etc.)
-├── backebd/              # Nuestra aplicación de Django para la lógica de negocio
-│   ├── __init__.py
-│   ├── admin.py          # Para registrar modelos en el panel de admin de Django
-│   ├── apps.py           # Configuración de la aplicación
-│   ├── migrations/       # Carpeta para las migraciones de la base de datos
-│   │   └── __init__.py
-│   ├── models.py         # <-- Aquí definimos las tablas de la BD (Producto, Cliente, etc.)
-│   ├── serializers.py    # <-- Aquí definimos cómo se convierten los datos a JSON
-│   ├── tests.py          # Para escribir pruebas unitarias
-│   ├── urls.py           # <-- Aquí definimos las rutas de la API para esta app
-│   └── views.py          # <-- Aquí está la lógica de la API (CRUDs, CrearVenta)
-│
-└── smart_sales_project/  # Carpeta de configuración del proyecto Django
+└── backend/              # Carpeta del proyecto Django (contiene settings y la app)
     ├── __init__.py
     ├── asgi.py           # Configuración para servidores ASGI
     ├── settings.py       # <-- Aquí configuramos la BD, apps instaladas, etc.
     ├── urls.py           # <-- Archivo de rutas principal que incluye las de la app
     └── wsgi.py           # Configuración para servidores WSGI
-
-
-falta desde: Tarea 3: Pruebas y Preparación (Días 7-8 | Lunes 27 - Martes 28)
+    │
+    └── api/              # Nuestra aplicación de Django para la lógica de negocio
+        ├── __init__.py
+        ├── admin.py      # Para registrar modelos en el panel de admin de Django
+        ├── apps.py       # Configuración de la aplicación
+        ├── migrations/   # Carpeta para las migraciones de la base de datos
+        ├── models.py     # <-- Aquí definimos las tablas de la BD (Producto, Cliente, etc.)
+        ├── serializers.py# <-- Aquí definimos cómo se convierten los datos a JSON
+        ├── tests.py      # Para escribir pruebas unitarias
+        ├── urls.py       # <-- Aquí definimos las rutas de la API para esta app
+        ├── views.py      # <-- Aquí está la lógica de la API (CRUDs, CrearVenta)
+        └── management/   # Carpeta para comandos personalizados
+            └── commands/
+                └── seed_data.py # Script para poblar la base de datos

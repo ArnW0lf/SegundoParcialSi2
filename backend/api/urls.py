@@ -17,6 +17,6 @@ router.register(r'ventas', VentaViewSet)
 
 # Las URLs de la API son determinadas automáticamente por el router.
 urlpatterns = [
-    path('', include(router.urls)),
     path('ventas/crear/', CrearVentaView.as_view(), name='crear-venta'),
+    path('', include(router.urls)),
 ]

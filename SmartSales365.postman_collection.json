@@ -1,0 +1,294 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-a1b2-c3d4e5f67890",
+		"name": "SmartSales365 API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Configuración",
+			"item": [
+				{
+					"name": "Ver Schema (Swagger)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/schema/swagger-ui/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"schema",
+								"swagger-ui",
+								""
+							]
+						},
+						"description": "Verifica que la documentación de Swagger se cargue correctamente."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Entidades Básicas (CRUD)",
+			"item": [
+				{
+					"name": "Listar Categorías",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Camisetas\",\n    \"descripcion\": \"Camisetas de algodón y poliéster\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categorias/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categorias",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/clientes/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"clientes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Ana Gómez\",\n    \"email\": \"ana.gomez@ejemplo.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/clientes/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"clientes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/productos/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Producto (Asignar a categoría 1)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Camiseta Básica Blanca\",\n    \"descripcion\": \"Algodón 100%\",\n    \"precio\": \"15.99\",\n    \"stock\": 100,\n    \"categoria_id\": 1 \n    \n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/productos/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								""
+							]
+						},
+						"description": "NOTA: El serializer de producto que hicimos espera 'categoria_id' al crear/actualizar. Asegúrate de que el ID (ej: 1) exista. Puedes crearlo con la request 'Crear Categoría' primero."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Flujo de Venta",
+			"item": [
+				{
+					"name": "Crear Venta (Éxito)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cliente_id\": 1,\n    \"metodo_pago\": \"PAYPAL\",\n    \"detalles\": [\n        {\n            \"producto_id\": 1,\n            \"cantidad\": 2\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ventas/crear/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ventas",
+								"crear",
+								""
+							]
+						},
+						"description": "Asegúrate de que el cliente_id=1 y producto_id=1 existan en tu BD. Esta request debería funcionar y devolver un 201 Created."
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar Stock (Después de Venta)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/productos/1/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"productos",
+								"1",
+								""
+							]
+						},
+						"description": "Si el producto 1 tenía 100 de stock y la 'Crear Venta (Éxito)' compró 2, este endpoint debería mostrar que el stock ahora es 98."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Venta (Error Stock Insuficiente)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cliente_id\": 1,\n    \"metodo_pago\": \"STRIPE\",\n    \"detalles\": [\n        {\n            \"producto_id\": 1,\n            \"cantidad\": 1000\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ventas/crear/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ventas",
+								"crear",
+								""
+							]
+						},
+						"description": "Esta request intenta comprar una cantidad (1000) que excede el stock. Debería fallar y devolver un error 400 Bad Request."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Ventas Realizadas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ventas/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ventas",
+								""
+							]
+						},
+						"description": "Muestra un historial de todas las ventas completadas, incluyendo sus detalles."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000"
+		}
+	]
+}

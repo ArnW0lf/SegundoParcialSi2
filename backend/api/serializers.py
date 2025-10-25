@@ -10,12 +10,16 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
 class ProductoSerializer(serializers.ModelSerializer):
     # Para la lectura, mostramos el nombre de la categoría, no solo su ID.
-    categoria = serializers.StringRelatedField()
+    categoria = CategoriaSerializer(read_only=True)
+    # Para la escritura, aceptamos el ID de la categoría.
+    categoria_id = serializers.PrimaryKeyRelatedField(
+        queryset=Categoria.objects.all(), source='categoria', write_only=True
+    )
 
     class Meta:
         model = Producto
         fields = ['id', 'nombre', 'descripcion',
-                  'precio', 'stock', 'categoria']
+                  'precio', 'stock', 'categoria', 'categoria_id']
 
 
 class ClienteSerializer(serializers.ModelSerializer):
