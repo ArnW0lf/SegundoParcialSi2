@@ -2,6 +2,7 @@ SegundoParcialSI2/        # Carpeta raíz del proyecto completo
 ├── .gitignore            # Archivo para ignorar archivos en Git (ej. venv, __pycache__)
 ├── manage.py             # Script de Django para administrar el proyecto
 ├── requirements.txt      # Archivo con las dependencias de Python (Django, DRF, etc.)
+├── frontend/             # Carpeta del proyecto Frontend (React + Vite)
 └── backend/              # Carpeta del proyecto Django (contiene settings y la app)
     ├── __init__.py
     ├── asgi.py           # Configuración para servidores ASGI
