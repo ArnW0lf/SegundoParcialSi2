@@ -1,0 +1,268 @@
+
+
+cd frontend
+
+npm create vite@latest . -- --template react
+Esto creará un proyecto React moderno dentro de la carpeta actual
+
+se esta usando empaquetador Rollup
+
+npm install
+
+npm install tailwindcss @tailwindcss/vite
+
+npm install react-router-dom
+
+npm install lucide-react
+npm install recharts
+
+-----------------------------------------------------------------------------------------
+src/
+├── components/
+│   ├── ai/
+│   │   ├── AIAssistant.jsx
+│   │   ├── AudioRecorder.jsx
+│   │   ├── ForecastWidget.jsx
+│   │   └── ChatBubble.jsx
+│   ├── common/
+│   ├── layout/
+│   ├── customer/
+│   ├── admin/
+│   └── seller/
+│
+├── pages/
+│   ├── ai/
+│   │   ├── Assistant.jsx
+│   │   └── Forecasts.jsx
+│   ├── public/
+│   ├── auth/
+│   ├── customer/
+│   ├── admin/
+│   └── seller/
+│
+├── services/
+│   ├── aiService.js
+│   ├── authService.js
+│   ├── productService.js
+│   ├── orderService.js
+│   └── reportService.js
+│
+├── hooks/
+│   ├── useAI.js
+│   ├── useSpeechToText.js
+│   └── useForecast.js
+│
+├── context/
+│   ├── AIContext.jsx
+│   ├── AuthContext.jsx
+│   ├── CartContext.jsx
+│   └── NotificationContext.jsx
+│
+├── routes/
+│   ├── AppRoutes.jsx
+│   ├── PublicRoutes.jsx
+│   ├── CustomerRoutes.jsx
+│   ├── AdminRoutes.jsx
+│   └── SellerRoutes.jsx
+├── layouts/             # Layouts por rol
+│   ├── PublicLayout.jsx
+│   ├── CustomerLayout.jsx
+│   ├── AdminLayout.jsx
+│   └── SellerLayout.jsx
+│
+├── utils/
+│   ├── constants.js
+│   ├── helpers.js
+│   ├── validators.js
+│   ├── permissions.js   # Lógica de permisos
+│   └── formatters.js
+├── index.css
+├── App.jsx
+└── main.jsx
+
+--------------------------------------------------
+boutique-frontend/
+├── public/
+│   └── images/
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   └── icons/
+│   ├── components/
+│   │   ├── common/              # Componentes compartidos
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── Table.jsx
+│   │   │   ├── Loading.jsx
+│   │   │   └── Pagination.jsx
+│   │   ├── layout/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── Sidebar.jsx
+│   │   ├── customer/            # Componentes de cliente
+│   │   │   ├── ProductCard.jsx
+│   │   │   ├── ProductGrid.jsx
+│   │   │   ├── ProductFilter.jsx
+│   │   │   ├── CartItem.jsx
+│   │   │   ├── CartSummary.jsx
+│   │   │   ├── CheckoutForm.jsx
+│   │   │   └── OrderCard.jsx
+│   │   └── admin/               # Componentes de admin
+│   │       ├── Dashboard/
+│   │       │   ├── StatsCard.jsx
+│   │       │   ├── SalesChart.jsx
+│   │       │   └── RecentOrders.jsx
+│   │       ├── Products/
+│   │       │   ├── ProductForm.jsx
+│   │       │   ├── ProductTable.jsx
+│   │       │   └── CategorySelect.jsx
+│   │       ├── Orders/
+│   │       │   ├── OrderTable.jsx
+│   │       │   ├── OrderDetail.jsx
+│   │       │   └── StatusBadge.jsx
+│   │       └── Users/
+│   │           ├── UserTable.jsx
+│   │           └── UserForm.jsx
+│   ├── pages/
+│   │   ├── public/              # Páginas públicas
+│   │   │   ├── Home.jsx
+│   │   │   ├── Shop.jsx
+│   │   │   ├── ProductDetail.jsx
+│   │   │   └── About.jsx
+│   │   ├── auth/
+│   │   │   ├── Login.jsx
+│   │   │   └── Register.jsx
+│   │   ├── customer/            # Páginas de cliente
+│   │   │   ├── Cart.jsx
+│   │   │   ├── Checkout.jsx
+│   │   │   ├── MyOrders.jsx
+│   │   │   ├── OrderDetail.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   └── Wishlist.jsx
+│   │   └── admin/               # Páginas de admin
+│   │       ├── Dashboard.jsx
+│   │       ├── Products.jsx
+│   │       ├── Orders.jsx
+│   │       ├── Customers.jsx
+│   │       ├── Categories.jsx
+│   │       └── Settings.jsx
+│   ├── layouts/
+│   │   ├── PublicLayout.jsx     # Layout para home, shop, etc
+│   │   ├── CustomerLayout.jsx   # Layout para clientes
+│   │   └── AdminLayout.jsx      # Layout para admin
+│   ├── routes/
+│   │   ├── AppRoutes.jsx
+│   │   └── ProtectedRoute.jsx
+│   ├── hooks/
+│   │   ├── useAuth.js
+│   │   ├── useCart.js
+│   │   ├── useProducts.js
+│   │   ├── useOrders.js
+│   │   └── useDebounce.js
+│   ├── services/
+│   │   ├── api.js               # Configuración axios
+│   │   ├── authService.js
+│   │   ├── productService.js
+│   │   ├── orderService.js
+│   │   ├── userService.js
+│   │   └── categoryService.js
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   ├── CartContext.jsx
+│   │   └── ToastContext.jsx
+│   ├── utils/
+│   │   ├── constants.js
+│   │   ├── helpers.js
+│   │   ├── validators.js
+│   │   └── formatters.js
+│   ├── styles/
+│   │   └── globals.css
+│   ├── App.jsx
+│   └── main.jsx
+-----------------------------
+//src\App.jsx
+en App.jsx se añadio ruta para dirigir a src/routes/AppRoutes.jsx
+
+en // src/pages/public/Home.jsx esta la vista principal src/components/layout/
+esta su footer "abajo",sidebar "lateral",header "arriba" 
+npm install lucide-react framer-motion
+
+
+menú desplegable de perfil (dropdown)
+
+
+
+├── src/
+│   App.css
+│   App.jsx
+│   estructura.txt
+│   index.css
+│   main.jsx
+│   
+├───assets
+│   │   logo.png
+│   │   logosb.jpg
+│   │   react.svg
+│   │   
+│   ├───icons
+│   │       app-store-badge.webp
+│   │       face.png
+│   │       google-play-badge.webp
+│   │       insta.png
+│   │       visa.png
+│   │       whatsapp.png
+│   │       you.png
+│   │       
+│   └───images
+├───components
+│   ├───customer
+│   │       CartItem.jsx
+│   │       CheckoutForm.jsx
+│   │       OrderHistory.jsx
+│   │       ProductCard.jsx
+│   │       ProductGrid.jsx
+│   │       
+│   ├───ia
+│   └───layout
+│           CustomerLayout.jsx
+│           Footer.jsx
+│           Header.jsx
+│           Sidebar.jsx
+│           UserMenu.jsx
+│           
+├───context
+├───hooks
+├───pages
+│   ├───admin
+│   ├───auth
+│   │       Login.jsx
+│   │       
+│   ├───customer
+│   │       Cart.jsx
+│   │       Checkout.jsx
+│   │       MyOrders.jsx
+│   │       ProductDetail.jsx
+│   │       Profile.jsx
+│   │       Shop.jsx
+│   │       
+│   └───public
+│           Home.jsx
+│           Shop.jsx
+│           
+├───routes
+│       AppRoutes.jsx
+│       
+├───services
+└───utils
+
+<button className="bloc md:flex items-center hover:text-blue-600 transition">
+            <ShoppingCart className="w-6 h-6" />
+          </button>
+
+
+
+
+
+
