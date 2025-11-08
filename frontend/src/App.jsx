@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 // Importamos nuestro nuevo archivo CSS
-import './App.css'; 
+import './App.css';
 
 // --- Configuración de la API de Django ---
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
@@ -12,7 +12,7 @@ const apiService = {
 };
 
 // --- Configuración de la API de Gemini ---
-const GEMINI_API_KEY = ""; 
+const GEMINI_API_KEY = "";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
 
 async function callGeminiAPI(userQuery, systemPrompt = "") {
@@ -88,15 +88,15 @@ export default function App() {
           apiService.get('/categorias'),
           apiService.get('/clientes')
         ]);
-        
+
         setProductos(resProductos.data);
         setCategorias(resCategorias.data);
         setClientes(resClientes.data);
-        
+
         if (resClientes.data.length > 0) {
           setClienteSeleccionado(resClientes.data[0].id);
         }
-        
+
         setStatusMessage('Haz clic en el micrófono para agregar productos por voz');
       } catch (error) {
         console.error("Error al cargar datos iniciales:", error);
@@ -173,12 +173,12 @@ export default function App() {
     try {
       setStatusMessage("Procesando venta...");
       await apiService.post('/ventas/crear', ventaData);
-      
+
       setStatusMessage("¡Venta realizada con éxito!");
       setCarrito([]);
       setIsCartOpen(false);
       setGeminiRecommendation('');
-      
+
       const resProductos = await apiService.get('/productos');
       setProductos(resProductos.data);
 
@@ -197,10 +197,10 @@ export default function App() {
     if (match && match[2]) {
       const productoNombre = match[2].trim();
       if (productoNombre) {
-        const productoEncontrado = productos.find(p => 
+        const productoEncontrado = productos.find(p =>
           p.nombre.toLowerCase().includes(productoNombre)
         );
-        
+
         if (productoEncontrado) {
           handleAddToCart(productoEncontrado);
         } else {
@@ -256,7 +256,7 @@ export default function App() {
     setGeminiRecommendation("");
 
     const itemNames = carrito.map(item => `${item.cantidad} x ${item.nombre}`).join(', ');
-    
+
     const systemPrompt = "Eres un asistente de moda y estilista personal para una tienda de ropa. Tu tono es amigable, servicial y a la moda. No intentes vender más productos, solo ofrece consejos de estilo.";
     const userQuery = `Mi carrito de compras actual contiene: ${itemNames}. Basado en esto, dame un breve consejo de moda (2-3 oraciones) sobre cómo puedo combinar estos artículos o qué tipo de accesorio (como un cinturón, bufanda o zapatos) podría complementar mi atuendo.`;
 
@@ -276,24 +276,24 @@ export default function App() {
   // Usamos 'class' en lugar de 'className'
   return (
     <div class="app-container">
-      <Navbar 
-        onCartClick={() => setIsCartOpen(true)} 
+      <Navbar
+        onCartClick={() => setIsCartOpen(true)}
         cartItemCount={carrito.reduce((count, item) => count + item.cantidad, 0)}
       />
-      
+
       <main class="main-content">
-        <CategoryFilter 
+        <CategoryFilter
           categorias={categorias}
           categoriaSeleccionada={categoriaSeleccionada}
           onCategoriaClick={setCategoriaSeleccionada}
         />
-        <ProductGrid 
-          productos={productosFiltrados} 
+        <ProductGrid
+          productos={productosFiltrados}
           onAddToCart={handleAddToCart}
         />
       </main>
 
-      <Footer 
+      <Footer
         statusMessage={statusMessage}
         isListening={isListening}
         onListenClick={handleListen}
@@ -328,8 +328,8 @@ function Navbar({ onCartClick, cartItemCount }) {
     <nav class="navbar">
       <div class="container navbar-content">
         <h1 class="navbar-title">SmartBoutique</h1>
-        <button 
-          onClick={onCartClick} 
+        <button
+          onClick={onCartClick}
           class="cart-button"
           aria-label="Abrir carrito"
         >
@@ -376,10 +376,10 @@ function ProductGrid({ productos, onAddToCart }) {
   return (
     <div class="product-grid">
       {productos.map(producto => (
-        <ProductCard 
-          key={producto.id} 
-          producto={producto} 
-          onAddToCart={onAddToCart} 
+        <ProductCard
+          key={producto.id}
+          producto={producto}
+          onAddToCart={onAddToCart}
         />
       ))}
     </div>
@@ -390,8 +390,8 @@ function ProductCard({ producto, onAddToCart }) {
   return (
     <div class="product-card">
       <div class="product-image-container">
-        <img 
-          src={`https://placehold.co/300x300/EBF4FF/6366F1?text=${encodeURIComponent(producto.nombre)}&font=Inter`}
+        <img
+          src={producto.imagen_url}
           alt={producto.nombre}
           class="product-image"
           onError={(e) => { e.target.src = 'https://placehold.co/300x300/EBF4FF/6366F1?text=Imagen&font=Inter'; }}
@@ -406,7 +406,7 @@ function ProductCard({ producto, onAddToCart }) {
             Stock: {producto.stock}
           </p>
         </div>
-        <button 
+        <button
           onClick={() => onAddToCart(producto)}
           disabled={producto.stock === 0}
           class="add-to-cart-button"
@@ -419,18 +419,18 @@ function ProductCard({ producto, onAddToCart }) {
 }
 
 // --- Componente CartSidebar MODIFICADO ---
-function CartSidebar({ 
-  isOpen, onClose, cartItems, onRemove, onUpdate, onCheckout, total, 
+function CartSidebar({
+  isOpen, onClose, cartItems, onRemove, onUpdate, onCheckout, total,
   clientes, clienteSeleccionado, onClienteChange,
   geminiRecommendation, isGeminiLoading, onStyleAdvice
 }) {
   return (
     <>
-      <div 
+      <div
         class={`cart-overlay ${isOpen ? 'open' : ''}`}
         onClick={onClose}
       />
-      <div 
+      <div
         class={`cart-sidebar ${isOpen ? 'open' : ''}`}
       >
         <div class="cart-header">
@@ -445,20 +445,20 @@ function CartSidebar({
         ) : (
           <div class="cart-items-container">
             {cartItems.map(item => (
-              <CartItem 
-                key={item.id} 
-                item={item} 
-                onRemove={onRemove} 
+              <CartItem
+                key={item.id}
+                item={item}
+                onRemove={onRemove}
                 onUpdate={onUpdate}
               />
             ))}
           </div>
         )}
-        
+
         <div class="cart-footer">
           <div class="cart-client-selector">
             <label htmlFor="cliente-select">Cliente:</label>
-            <select 
+            <select
               id="cliente-select"
               value={clienteSeleccionado}
               onChange={(e) => onClienteChange(e.target.value)}
@@ -513,10 +513,10 @@ function CartItem({ item, onRemove, onUpdate }) {
   return (
     <div class="cart-item">
       <div class="cart-item-image-container">
-        <img 
-            src={`https://placehold.co/100x100/EBF4FF/6366F1?text=${encodeURIComponent(item.nombre.split(' ')[0])}&font=Inter`}
-            alt={item.nombre}
-            class="cart-item-image"
+        <img
+          src={`https://placehold.co/100x100/EBF4FF/6366F1?text=${encodeURIComponent(item.nombre.split(' ')[0])}&font=Inter`}
+          alt={item.nombre}
+          class="cart-item-image"
         />
       </div>
       <div class_name="cart-item-details">
@@ -556,4 +556,3 @@ function Footer({ statusMessage, isListening, onListenClick }) {
     </footer>
   );
 }
-

@@ -65,7 +65,9 @@ class Command(BaseCommand):
                         descripcion=f'Una descripción para {nombre_producto}. Hecho con materiales de calidad.',
                         precio=round(random.uniform(19.99, 149.99), 2),
                         stock=random.randint(10, 100),
-                        categoria=categoria
+                        categoria=categoria,
+                        imagen_url='https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=400' 
+
                     )
                     productos_creados_total += 1
 
